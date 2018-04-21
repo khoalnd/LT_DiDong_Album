@@ -26,16 +26,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-/**
- * Created by SHAJIB on 7/16/2017.
- */
 
 public class AlbumActivity extends AppCompatActivity {
     GridView galleryGridView;
     ArrayList<HashMap<String, String>> imageList = new ArrayList<HashMap<String, String>>();
     String album_name = "";
     LoadAlbumImages loadAlbumTask;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +108,8 @@ public class AlbumActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view,
                                         final int position, long id) {
                     Intent intent = new Intent(AlbumActivity.this, GalleryPreview.class);
-                    intent.putExtra("path", imageList.get(+position).get(Function.KEY_PATH));
+                    intent.putExtra("position", String.valueOf(position));
+                    intent.putExtra("images", imageList);
                     startActivity(intent);
                 }
             });

@@ -5,25 +5,34 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.support.v4.view.ViewPager;
 
 import com.bumptech.glide.Glide;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GalleryPreview extends Activity {
 
-    ImageView GalleryPreviewImg;
-    String path;
+    int position;
+    ViewPager viewPager;
+    ViewPagerAdapter adapter;
+    private ArrayList<HashMap<String, String>> images;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //getSupportActionBar().hide();
         setContentView(R.layout.gallery_preview);
         Intent intent = getIntent();
-        path = intent.getStringExtra("path");
-        GalleryPreviewImg = (ImageView) findViewById(R.id.GalleryPreviewImg);
-        Glide.with(GalleryPreview.this)
-                .load(new File(path)) // Uri of the picture
-                .into(GalleryPreviewImg);
+        position = Integer.parseInt(intent.getStringExtra("position"));
+        images = (ArrayList<HashMap<String, String>>)intent.getSerializableExtra("images");
+
+        viewPager = (ViewPager)findViewById(R.id.viewPager);
+        //adapter = new ViewPagerAdapter(GalleryPreview.this,images, 2);
+        adapter = new ViewPagerAdapter(GalleryPreview.this,images);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(position);
     }
 }
